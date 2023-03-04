@@ -7,13 +7,19 @@ Source: https://sketchfab.com/3d-models/butterfly-bb7a9781c2674e59a0f335fb8efb77
 Title: Butterfly
 */
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 
 export function Butterfly(props) {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('./models/butterfly/scene-transformed.glb')
   const { actions } = useAnimations(animations, group)
+  useEffect(()=>{
+    console.log(actions);
+    //slow down 
+    actions.Object_0.timeScale=0.15
+    actions.Object_0.play();
+  })
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Sketchfab_Scene">
@@ -201,7 +207,7 @@ export function Butterfly(props) {
                     </group>
                   </group>
                 </group>
-                <group name="Object_111" position={[2.47, -1.19, 1.22]} rotation={[-Math.PI / 2, 0, 0]}>
+                <group visible={false} name="Object_111" position={[2.47, -1.19, 1.22]} rotation={[-Math.PI / 2, 0, 0]}>
                   <group name="TimeframeMainGroup_2">
                     <group name="Object_113">
                       <mesh name="Box001_2_0_2" geometry={nodes.Box001_2_0_2.geometry} material={materials.Box001} />

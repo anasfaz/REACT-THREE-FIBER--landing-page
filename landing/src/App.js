@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollControls, Scroll, Environment,Float } from "@react-three/drei";
+import { ScrollControls, Scroll, Environment, Float, Sparkles } from "@react-three/drei";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -7,34 +7,87 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "./App.css";
 import { Butterfly } from "./model/Buttefly";
-import {EffectComposer,Bloom, DepthOfField, Vignette} from '@react-three/postprocessing'
+import {
+  EffectComposer,
+  Bloom,
+  DepthOfField,
+  Vignette,
+} from "@react-three/postprocessing";
+
+
 function App() {
   return (
     <>
-      <color attach="background" args={["#000000"]} />
-      <ambientLight intensity={1} />
-      <spotLight position={[0,25,0]} angle={1.3} penumbra={1} castShadow intensity={2} shadow-bias={-0.0001} />
-
-      <Environment preset="warehouse" />
       <EffectComposer>
-       <Bloom intensity={2} luminaceThreshold={0.2} luminanceSmoothing={0.9} height={1000}/>
-       <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={5} height={480}/>
-       <Vignette eskil={false} offset={1.5} darkness={1.5}/>
+        <DepthOfField
+          focusDistance={0}
+          focalLength={0.02}
+          bokehScale={5}
+          height={480}
+        />
+        <Bloom
+          intensity={2}
+          luminanceThreshold={0.1}
+          luminanceSmoothing={0.9}
+          height={1000}
+        />
+        <Vignette eskil={false} offset={0.5} darkness={1.5} />
       </EffectComposer>
+      <color attach="background" args={["#000"]} />
+      <ambientLight intensity={0.2} />
+      <spotLight
+        position={[0, 25, 0]}
+        angle={1.3}
+        penumbra={1}
+        castShadow
+        intensity={2}
+        shadow-bias={-0.0001}
+      />
+      <Environment
+      preset='warehouse'
+    />  
       <ScrollControls pages={6} damping={0.25}>
         <Scroll>
-        <Float 
-        speed={1}
-        rotationIntensity={2}
-        floatIntetensity={0.2}
-        floatingRange={[1,1]}
+        {/* top */}
+        <Float
+          speed={1} // Animation speed, defaults to 1
+          rotationIntensity={2} // XYZ rotation intensity, defaults to 1
+          floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
+          floatingRange={[1, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
         >
-        
-          <Butterfly scale={0.05} position={[-1, -12.5, 0]} />
-          <Butterfly scale={0.05} position={[12, -14.5, -10]} />
-          </Float>
-        </Scroll>
+        <Butterfly rotation-x={Math.PI * 0.05} scale={0.05} position={[0,-2.5,0]}/>
+        <Butterfly scale={0.05} position={[-10,-3,-6]}/>
+        <Butterfly scale={0.05} position={[10,-4,-10]}/>   
+        </Float>
+        {/* top */}
 
+        {/* middle */}
+        <Float
+          speed={1} // Animation speed, defaults to 1
+          rotationIntensity={2} // XYZ rotation intensity, defaults to 1
+          floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
+          floatingRange={[1, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
+        >
+        <Butterfly scale={0.05} position={[-1,-12.5,0]}/>
+        <Butterfly scale={0.05} position={[12,-14,-10]}/>   
+        </Float>        
+        {/* middle */}
+
+        {/* middle */}
+        <Float
+          speed={1} // Animation speed, defaults to 1
+          rotationIntensity={2} // XYZ rotation intensity, defaults to 1
+          floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
+          floatingRange={[1, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
+        >
+        <Butterfly scale={0.05} position={[-3,-19.5,2]}/>
+        <Butterfly scale={0.05} position={[8,-23,-10]}/>
+        <Butterfly scale={0.05} position={[4,-24,2]}/>  
+        </Float>  
+        {/* middle */}
+        </Scroll>
+        <Sparkles noise={0} count={500} speed={0.01} size={0.6} color={"#FFD2BE"} opacity={10} scale={[20,100,20]}></Sparkles> 
+        <Sparkles noise={0} count={50} speed={0.01} size={10} color={"#FFF"} opacity={2} scale={[30,100,10]}></Sparkles> 
         <Scroll html style={{ width: "100%" }}>
           <Container style={{ position: "relative" }}>
             <Row
